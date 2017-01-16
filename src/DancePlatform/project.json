@@ -1,4 +1,4 @@
-﻿{
+{
   "userSecretsId": "aspnet-DancePlatform-887625e0-4bcb-4f81-bd4e-8ab5e4375e4f",
 
   "dependencies": {
@@ -35,10 +35,11 @@
       "version": "1.0.0-preview1-final",
       "type": "build"
     },
-    "Microsoft.VisualStudio.Web.CodeGenerators.Mvc":  {
+    "Microsoft.VisualStudio.Web.CodeGenerators.Mvc": {
       "version": "1.0.0-preview1-final",
       "type": "build"
-    }
+    },
+    "Microsoft.AspNetCore.Authentication.Facebook": "1.0.0-rc2-final"
   },
 
   "tools": {
