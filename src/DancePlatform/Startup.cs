@@ -12,6 +12,8 @@ using Microsoft.Extensions.Logging;
 using DancePlatform.Data;
 using DancePlatform.Models;
 using DancePlatform.Services;
+using Microsoft.AspNetCore.Mvc;
+using DancePlatform.Models.AccountViewModels;
 
 namespace DancePlatform
 {
@@ -58,6 +60,11 @@ namespace DancePlatform
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
 
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new RequireHttpsAttribute());
+            });
+
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings
@@ -78,6 +85,9 @@ namespace DancePlatform
 
                 // User settings
                 options.User.RequireUniqueEmail = true;
+
+                // Require Confirmed Email
+                options.SignIn.RequireConfirmedEmail = true;
             });
         }
 
