@@ -119,13 +119,6 @@ namespace DancePlatform
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
             app.UseFacebookAuthentication(new FacebookOptions()
             {
-                AppId = "1666486346982069",
-                AppSecret = "7c5306519c4e1eac9fb4a87485a202b1"
-            });
-
-
-            app.UseFacebookAuthentication(new FacebookOptions()
-            {
                 AppId = Configuration["Authentication:Facebook:AppId"],
                 AppSecret = Configuration["Authentication:Facebook:AppSecret"]
             });
