@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using DancePlatform.Data;
 using DancePlatform.Models;
 using DancePlatform.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DancePlatform
 {
@@ -43,7 +44,7 @@ namespace DancePlatform
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddApplicationInsightsTelemetry(Configuration);
+            //services.AddApplicationInsightsTelemetry(Configuration);
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -52,7 +53,11 @@ namespace DancePlatform
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.SslPort = 44321;
+                options.Filters.Add(new RequireHttpsAttribute());
+            });
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -87,7 +92,7 @@ namespace DancePlatform
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseApplicationInsightsRequestTelemetry();
+            //app.UseApplicationInsightsRequestTelemetry();
 
             if (env.IsDevelopment())
             {
@@ -100,13 +105,19 @@ namespace DancePlatform
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseApplicationInsightsExceptionTelemetry();
+            //app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseStaticFiles();
 
             app.UseIdentity();
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
+            app.UseFacebookAuthentication(new FacebookOptions()
+            {
+                AppId = "1666486346982069",
+                AppSecret = "7c5306519c4e1eac9fb4a87485a202b1"
+            });
+
 
             app.UseMvc(routes =>
             {
