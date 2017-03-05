@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using DancePlatform.DAL.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using DancePlatform.Models;
 
-namespace DancePlatform.Data
+namespace DancePlatform.DAL
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -14,6 +10,12 @@ namespace DancePlatform.Data
             : base(options)
         {
         }
+
+        public DbSet<Club> Clubs { get; set; }
+
+        public DbSet<Album> Albums { get; set; }
+
+        public DbSet<Photo> Photos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -9,15 +6,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using DancePlatform.Data;
-using DancePlatform.Models;
 using DancePlatform.Services;
 using Microsoft.AspNetCore.Mvc;
+using DancePlatform.DAL;
+using DancePlatform.DAL.Models;
 
 namespace DancePlatform
 {
     public class Startup
     {
+        public IConfigurationRoot Configuration { get; }
+
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -37,8 +36,6 @@ namespace DancePlatform
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
         }
-
-        public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -63,6 +60,11 @@ namespace DancePlatform
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
 
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new RequireHttpsAttribute());
+            });
+
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings
@@ -83,6 +85,9 @@ namespace DancePlatform
 
                 // User settings
                 options.User.RequireUniqueEmail = true;
+
+                // Require Confirmed Email
+                options.SignIn.RequireConfirmedEmail = true;
             });
         }
 
@@ -118,6 +123,12 @@ namespace DancePlatform
                 AppSecret = "7c5306519c4e1eac9fb4a87485a202b1"
             });
 
+
+            app.UseFacebookAuthentication(new FacebookOptions()
+            {
+                AppId = Configuration["Authentication:Facebook:AppId"],
+                AppSecret = Configuration["Authentication:Facebook:AppSecret"]
+            });
 
             app.UseMvc(routes =>
             {

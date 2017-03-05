@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using DancePlatform.Models;
 using DancePlatform.Models.ManageViewModels;
 using DancePlatform.Services;
+using DancePlatform.DAL.Models;
 
 namespace DancePlatform.Controllers
 {
