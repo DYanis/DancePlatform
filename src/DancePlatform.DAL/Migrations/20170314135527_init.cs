@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace DancePlatform.DAL.Migrations
 {
-    public partial class test3 : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,21 +17,21 @@ namespace DancePlatform.DAL.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     Age = table.Column<byte>(nullable: false),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
+                    FirstName = table.Column<string>(maxLength: 30, nullable: true),
+                    LastName = table.Column<string>(maxLength: 30, nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    NormalizedEmail = table.Column<string>(nullable: true),
-                    NormalizedUserName = table.Column<string>(nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     PasswordHash = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
                     PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    PhotoPath = table.Column<string>(nullable: true),
+                    PhotoPath = table.Column<string>(maxLength: 300, nullable: true),
                     SecurityStamp = table.Column<string>(nullable: true),
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    UserName = table.Column<string>(nullable: true)
+                    UserName = table.Column<string>(maxLength: 256, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -49,13 +49,13 @@ namespace DancePlatform.DAL.Migrations
                     EmailConfirmed = table.Column<bool>(nullable: false),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    Name = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
                     NormalizedEmail = table.Column<string>(nullable: true),
                     NormalizedUserName = table.Column<string>(nullable: true),
                     PasswordHash = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
                     PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    PhotoPath = table.Column<string>(nullable: false),
+                    PhotoPath = table.Column<string>(maxLength: 300, nullable: false),
                     SecurityStamp = table.Column<string>(nullable: true),
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     UserName = table.Column<string>(nullable: true)
@@ -71,8 +71,8 @@ namespace DancePlatform.DAL.Migrations
                 {
                     Id = table.Column<string>(nullable: false),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    NormalizedName = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -101,7 +101,7 @@ namespace DancePlatform.DAL.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ClubID = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
-                    Name = table.Column<string>(nullable: false)
+                    Name = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -228,8 +228,8 @@ namespace DancePlatform.DAL.Migrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AlbumID = table.Column<int>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    Path = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(maxLength: 1000, nullable: true),
+                    Path = table.Column<string>(maxLength: 300, nullable: false),
                     UploadDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -256,7 +256,8 @@ namespace DancePlatform.DAL.Migrations
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
-                column: "NormalizedUserName");
+                column: "NormalizedUserName",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Photos_AlbumID",
@@ -266,7 +267,8 @@ namespace DancePlatform.DAL.Migrations
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
-                column: "NormalizedName");
+                column: "NormalizedName",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -302,11 +304,6 @@ namespace DancePlatform.DAL.Migrations
                 name: "IX_AspNetUserRoles_RoleId",
                 table: "AspNetUserRoles",
                 column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserRoles_UserId",
-                table: "AspNetUserRoles",
-                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

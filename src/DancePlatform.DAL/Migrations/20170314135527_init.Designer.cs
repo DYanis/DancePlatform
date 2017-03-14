@@ -3,20 +3,21 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using DancePlatform.DAL;
 
 namespace DancePlatform.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170128193046_test3")]
-    partial class test3
+    [Migration("20170314135527_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.0.0-rc2-20901")
+                .HasAnnotation("ProductVersion", "1.1.1")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DancePlatform.Data.Models.Album", b =>
+            modelBuilder.Entity("DancePlatform.DAL.Models.Album", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
@@ -27,7 +28,7 @@ namespace DancePlatform.DAL.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 100);
+                        .HasMaxLength(100);
 
                     b.HasKey("ID");
 
@@ -36,9 +37,10 @@ namespace DancePlatform.DAL.Migrations
                     b.ToTable("Albums");
                 });
 
-            modelBuilder.Entity("DancePlatform.Data.Models.ApplicationUser", b =>
+            modelBuilder.Entity("DancePlatform.DAL.Models.ApplicationUser", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
 
@@ -48,25 +50,25 @@ namespace DancePlatform.DAL.Migrations
                         .IsConcurrencyToken();
 
                     b.Property<string>("Email")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
 
                     b.Property<string>("FirstName")
-                        .HasAnnotation("MaxLength", 30);
+                        .HasMaxLength(30);
 
                     b.Property<string>("LastName")
-                        .HasAnnotation("MaxLength", 30);
+                        .HasMaxLength(30);
 
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<string>("NormalizedUserName")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<string>("PasswordHash");
 
@@ -75,14 +77,14 @@ namespace DancePlatform.DAL.Migrations
                     b.Property<bool>("PhoneNumberConfirmed");
 
                     b.Property<string>("PhotoPath")
-                        .HasAnnotation("MaxLength", 300);
+                        .HasMaxLength(300);
 
                     b.Property<string>("SecurityStamp");
 
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.HasKey("Id");
 
@@ -90,14 +92,16 @@ namespace DancePlatform.DAL.Migrations
                         .HasName("EmailIndex");
 
                     b.HasIndex("NormalizedUserName")
+                        .IsUnique()
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("DancePlatform.Data.Models.Club", b =>
+            modelBuilder.Entity("DancePlatform.DAL.Models.Club", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
 
@@ -113,7 +117,7 @@ namespace DancePlatform.DAL.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 100);
+                        .HasMaxLength(100);
 
                     b.Property<string>("NormalizedEmail");
 
@@ -127,7 +131,7 @@ namespace DancePlatform.DAL.Migrations
 
                     b.Property<string>("PhotoPath")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 300);
+                        .HasMaxLength(300);
 
                     b.Property<string>("SecurityStamp");
 
@@ -140,7 +144,7 @@ namespace DancePlatform.DAL.Migrations
                     b.ToTable("Clubs");
                 });
 
-            modelBuilder.Entity("DancePlatform.Data.Models.Photo", b =>
+            modelBuilder.Entity("DancePlatform.DAL.Models.Photo", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
@@ -148,11 +152,11 @@ namespace DancePlatform.DAL.Migrations
                     b.Property<int>("AlbumID");
 
                     b.Property<string>("Description")
-                        .HasAnnotation("MaxLength", 1000);
+                        .HasMaxLength(1000);
 
                     b.Property<string>("Path")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 300);
+                        .HasMaxLength(300);
 
                     b.Property<DateTime>("UploadDate");
 
@@ -165,20 +169,22 @@ namespace DancePlatform.DAL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
                     b.Property<string>("Name")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<string>("NormalizedName")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
+                        .IsUnique()
                         .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
@@ -262,8 +268,6 @@ namespace DancePlatform.DAL.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("AspNetUserRoles");
                 });
 
@@ -282,17 +286,17 @@ namespace DancePlatform.DAL.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("DancePlatform.Data.Models.Album", b =>
+            modelBuilder.Entity("DancePlatform.DAL.Models.Album", b =>
                 {
-                    b.HasOne("DancePlatform.Data.Models.Club")
-                        .WithMany()
+                    b.HasOne("DancePlatform.DAL.Models.Club", "Club")
+                        .WithMany("Albums")
                         .HasForeignKey("ClubID");
                 });
 
-            modelBuilder.Entity("DancePlatform.Data.Models.Photo", b =>
+            modelBuilder.Entity("DancePlatform.DAL.Models.Photo", b =>
                 {
-                    b.HasOne("DancePlatform.Data.Models.Album")
-                        .WithMany()
+                    b.HasOne("DancePlatform.DAL.Models.Album", "Album")
+                        .WithMany("Photos")
                         .HasForeignKey("AlbumID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -300,48 +304,48 @@ namespace DancePlatform.DAL.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole")
-                        .WithMany()
+                        .WithMany("Claims")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("DancePlatform.Data.Models.Club")
-                        .WithMany()
+                    b.HasOne("DancePlatform.DAL.Models.Club")
+                        .WithMany("Claims")
                         .HasForeignKey("ClubId");
 
-                    b.HasOne("DancePlatform.Data.Models.ApplicationUser")
-                        .WithMany()
+                    b.HasOne("DancePlatform.DAL.Models.ApplicationUser")
+                        .WithMany("Claims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("DancePlatform.Data.Models.Club")
-                        .WithMany()
+                    b.HasOne("DancePlatform.DAL.Models.Club")
+                        .WithMany("Logins")
                         .HasForeignKey("ClubId");
 
-                    b.HasOne("DancePlatform.Data.Models.ApplicationUser")
-                        .WithMany()
+                    b.HasOne("DancePlatform.DAL.Models.ApplicationUser")
+                        .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("DancePlatform.Data.Models.Club")
-                        .WithMany()
+                    b.HasOne("DancePlatform.DAL.Models.Club")
+                        .WithMany("Roles")
                         .HasForeignKey("ClubId");
 
                     b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole")
-                        .WithMany()
+                        .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("DancePlatform.Data.Models.ApplicationUser")
-                        .WithMany()
+                    b.HasOne("DancePlatform.DAL.Models.ApplicationUser")
+                        .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
