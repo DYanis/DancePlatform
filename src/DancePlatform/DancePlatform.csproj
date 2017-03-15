@@ -73,4 +73,11 @@
     <ProjectReference Include="..\DancePlatform.Services\DancePlatform.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\MediaData\Clubs\Photos\" />
+    <Folder Include="wwwroot\MediaData\Clubs\Videos\" />
+    <Folder Include="wwwroot\MediaData\Users\Photos\" />
+    <Folder Include="wwwroot\MediaData\Users\Videos\" />
+  </ItemGroup>
+
 </Project>
