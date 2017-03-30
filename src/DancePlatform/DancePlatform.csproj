@@ -23,6 +23,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot/images\logo\Logo2.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\css\bootstrap-light.css" />
+    <Content Include="wwwroot\css\theme-light.css" />
+    <Content Include="wwwroot\images\banner2.jpg" />
+    <Content Include="wwwroot\images\logo\IDanceLogo.png" />
+    <Content Include="wwwroot\images\logo\Logo.png" />
+    <Content Include="wwwroot\images\logo\Logo2.png" />
+    <Content Include="wwwroot\images\logo\Logo3.png" />
+    <Content Include="wwwroot\images\logo\LogoCrop.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="wwwroot\**\*;Views\**\*;appsettings.json;web.config">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
@@ -74,6 +89,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\images\background\" />
     <Folder Include="wwwroot\MediaData\Clubs\Photos\" />
     <Folder Include="wwwroot\MediaData\Clubs\Videos\" />
     <Folder Include="wwwroot\MediaData\Users\Photos\" />
